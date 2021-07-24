@@ -1,28 +1,77 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <h1> To-do List</h1>
+    <div>
+      <AddTask @add-task="addTask"/>
+      <ul>
+        <li class="task" v-for="(task, index) in tasks" :key="index">
+          {{index}}. {{task}}
+          <i @click="removeTask(index)" class="fas fa-times"></i>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import AddTask from './components/AddTask.vue' 
 
 export default {
+  
   name: "App",
-  components: {
-    HelloWorld,
+  data: () => ({
+    tasks: ["Ir al super", "Hacer la tarea"]
+
+  }),
+  methods:{
+
+    removeTask(index){  
+      this.tasks.splice(index, 1);
+      
+    },
+    addTask(task){
+      this.tasks.push(task)
+    }
   },
-};
+
+  components:{
+    AddTask,
+  },
+}
 </script>
 
 <style lang="scss">
+
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: Helvetica, sans-serif;
   text-align: center;
-  color: #2c3e50;
   margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.task {
+  background: #f4f4f4;
+  margin: 5px;
+  padding: 10px 20px;
+  list-style-type: none;
+  text-align: start;
+  display: flex;
+  justify-content: space-between;
+}
+
+i{
+   cursor: pointer;
+}
+
+i:hover{
+  color: red;
+}
+
+ul{
+  padding: 0;
 }
 </style>
